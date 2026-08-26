@@ -1,0 +1,10 @@
+node_modules/
+.vercel/
+.DS_Store
+*.log
+.env
+.env.local
+
+# Design-canvas export the site was built from — kept out of the deploy.
+unpacked/
+*.zip
