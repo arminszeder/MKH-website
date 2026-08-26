@@ -175,9 +175,9 @@ input::placeholder, textarea::placeholder { color: rgba(142, 138, 123, 0.7); }
 }
 .hero h1 {
   font-weight: 600;
-  font-size: clamp(34px, 5.4vw, 76px);
+  font-size: clamp(31px, 5.1vw, 72px);
   line-height: 1.08;
-  max-width: 15ch;
+  max-width: 18ch;
   text-wrap: balance;
 }
 .hero p {
