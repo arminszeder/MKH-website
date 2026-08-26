@@ -1,14 +1,20 @@
-/* POST /api/contact — delivers an enquiry by email via Resend.
+/* POST /api/contact — delivers an enquiry by email over Gmail SMTP.
  *
- * Environment variables (set these in Vercel → Settings → Environment Variables):
- *   RESEND_API_KEY  required — https://resend.com/api-keys
- *   MAIL_TO         required — where enquiries land, e.g. info@mkhwerk.hu
- *   MAIL_FROM       optional — defaults to Resend's shared sender. Once a domain
- *                   is verified in Resend, set e.g. "MKH Werk <ajanlat@mkhwerk.hu>".
+ * Environment variables (Vercel → Settings → Environment Variables):
+ *   GMAIL_USER          required — the sending account, e.g. info.mkhwerk@gmail.com
+ *   GMAIL_APP_PASSWORD  required — a 16-character Google App Password, NOT the
+ *                       account password. Needs 2-Step Verification enabled:
+ *                       https://myaccount.google.com/apppasswords
+ *   MAIL_TO             optional — where enquiries land. Defaults to GMAIL_USER.
  *
- * With no key configured the endpoint answers 503 and the browser falls back to
- * a prefilled mailto: link, so the form is never a dead end.
+ * Gmail only permits the authenticated account (or one of its verified aliases)
+ * in the From header, so the customer's address goes in Reply-To instead.
+ *
+ * With no credentials configured the endpoint answers 503 and the browser falls
+ * back to a prefilled mailto: link, so the form is never a dead end.
  */
+
+import nodemailer from 'nodemailer';
 
 const MAX_ATTACHMENTS = 5;
 const MAX_ATTACHMENT_BYTES = 3.5e6;
@@ -41,6 +47,25 @@ const esc = (v) =>
     .replace(/"/g, '&quot;');
 
 const clean = (v, max) => String(v ?? '').trim().slice(0, max);
+
+// Reused across invocations that land on a warm instance.
+let transport;
+
+function getTransport(user, pass) {
+  if (!transport) {
+    transport = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true,
+      auth: { user, pass },
+      // Keep well inside the function's execution budget.
+      connectionTimeout: 8000,
+      greetingTimeout: 8000,
+      socketTimeout: 8000
+    });
+  }
+  return transport;
+}
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -85,15 +110,17 @@ export default async function handler(req, res) {
     if (bytes > MAX_ATTACHMENT_BYTES) break;
     attachments.push({
       filename: clean(a.filename, 100).replace(/[^\w.\- ]+/g, '_') || 'foto.jpg',
-      content: content.replace(/\s+/g, '')
+      content: content.replace(/\s+/g, ''),
+      encoding: 'base64'
     });
   }
 
-  const apiKey = process.env.RESEND_API_KEY;
-  const to = process.env.MAIL_TO;
+  const user = process.env.GMAIL_USER;
+  const pass = process.env.GMAIL_APP_PASSWORD;
+  const to = process.env.MAIL_TO || user;
 
-  if (!apiKey || !to) {
-    console.error('[contact] RESEND_API_KEY or MAIL_TO is not configured');
+  if (!user || !pass) {
+    console.error('[contact] GMAIL_USER or GMAIL_APP_PASSWORD is not configured');
     return res.status(503).json({ error: 'Az e-mail küldés még nincs beállítva.' });
   }
 
@@ -128,34 +155,40 @@ export default async function handler(req, res) {
   </div>
 </div>`;
 
-  try {
-    const resend = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        from: process.env.MAIL_FROM || 'MKH Werk <onboarding@resend.dev>',
-        to: [to],
-        subject: `Ajánlatkérés — ${nev} (${tipus})`,
-        html,
-        // Replying in the mail client goes straight back to the customer.
-        ...(email ? { reply_to: email } : {}),
-        ...(attachments.length ? { attachments } : {})
-      })
-    });
+  const text = [
+    `Név: ${nev}`,
+    `Telefon: ${telefon}`,
+    `E-mail: ${email || '—'}`,
+    `Munka típusa: ${tipus}`,
+    `Csatolt képek: ${attachments.length}`,
+    '',
+    uzenet || '(nincs üzenet)'
+  ].join('\n');
 
-    if (!resend.ok) {
-      const detail = await resend.text();
-      console.error('[contact] resend %s: %s', resend.status, detail.slice(0, 500));
-      return res.status(502).json({ error: 'Az e-mail szolgáltató elutasította a küldést.' });
-    }
+  try {
+    await getTransport(user, pass).sendMail({
+      // Gmail rewrites From to the authenticated account anyway; set it explicitly
+      // so the display name is right.
+      from: `MKH Werk <${user}>`,
+      to,
+      subject: `Ajánlatkérés — ${nev} (${tipus})`,
+      text,
+      html,
+      // Replying in the mail client goes straight back to the customer.
+      ...(email ? { replyTo: email } : {}),
+      ...(attachments.length ? { attachments } : {})
+    });
 
     return res.status(200).json({ ok: true });
   } catch (err) {
-    console.error('[contact]', err);
-    return res.status(500).json({ error: 'Váratlan hiba a küldés közben.' });
+    // A rejected login should not poison every later request on this instance.
+    transport = null;
+    console.error('[contact]', err?.message || err);
+
+    if (err?.responseCode === 535 || /invalid login|username and password/i.test(err?.message || '')) {
+      return res.status(502).json({ error: 'Az e-mail fiók hitelesítése sikertelen.' });
+    }
+    return res.status(502).json({ error: 'Az e-mail küldés most nem sikerült.' });
   }
 }
 

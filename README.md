@@ -37,14 +37,20 @@ A Vercelen: **Project → Settings → Environment Variables**.
 
 | Név | Kötelező | Leírás |
 | --- | --- | --- |
-| `RESEND_API_KEY` | igen | https://resend.com/api-keys |
-| `MAIL_TO` | igen | ide érkeznek az ajánlatkérések |
-| `MAIL_FROM` | nem | pl. `MKH Werk <ajanlat@mkhwerk.hu>` — csak Resenden hitelesített domainnel |
+| `GMAIL_USER` | igen | a küldő Gmail-fiók, pl. `info.mkhwerk@gmail.com` |
+| `GMAIL_APP_PASSWORD` | igen | 16 karakteres Google App Password — **nem** a fiók jelszava |
+| `MAIL_TO` | nem | ide érkeznek az ajánlatkérések; alapértelmezés a `GMAIL_USER` |
 
-`MAIL_FROM` nélkül a Resend megosztott feladóját használjuk
-(`onboarding@resend.dev`), ami **csak a saját Resend-fiókod e-mail címére tud
-kézbesíteni**. Éles használathoz igazold a domaint a Resendben, és állítsd be a
-`MAIL_FROM`-ot.
+### App Password létrehozása
+
+1. A Google-fiókon kapcsold be a **2-lépcsős azonosítást**
+2. Nyisd meg: https://myaccount.google.com/apppasswords
+3. Adj neki nevet (pl. „MKH Werk weboldal"), és másold ki a 16 karaktert
+4. Szóközök nélkül illeszd be a `GMAIL_APP_PASSWORD` értékének
+
+A Gmail csak a hitelesített fiókot (vagy annak igazolt aliasát) engedi a
+`From` mezőben, ezért az ügyfél címe a `Reply-To`-ba kerül — a levélre válaszolva
+közvetlenül az érdeklődőnek írsz. A Gmail napi kb. 500 kimenő levelet enged.
 
 ## Mielőtt élesbe megy — cseréld ki
 
