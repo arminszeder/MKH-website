@@ -66,10 +66,13 @@ A `.craft__shots img` szabály gondoskodik a kitöltésről, más módosítás n
 
 ```bash
 npm run check          # szintaxis-ellenőrzés
-```
 
-A böngészős teszteket a fejlesztés során Playwrighttal futtattuk
-(galéria szűrő, lightbox, előtte/utána csúszka, mobilmenü, horgonylinkek).
+npm install                       # csak először
+npx playwright install chromium   # csak először
+npm run dev &
+npm test               # tests/site.mjs — galéria szűrő, lightbox,
+                       # előtte/utána csúszka, mobilmenü, horgonylinkek
+```
 
 ## Deploy
 
