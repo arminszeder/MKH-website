@@ -17,6 +17,10 @@
     repeating-linear-gradient(-45deg, rgba(233, 214, 166, 0.045) 0 1px, transparent 1px 118px);
   --gut: clamp(20px, 7.5vw, 150px);
   --maxw: 1680px;
+  /* Menu button (46px) + vertical padding + hairline. Only the mobile header is
+     opaque and sits above the hero rather than over it. */
+  --header-h: 87px;
+  --hero-gap: 20px;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -756,7 +760,14 @@ body.is-locked { overflow: hidden; }
 /* ------------------------------------------------------------ breakpoints -- */
 
 @media (max-width: 900px) {
-  html { scroll-padding-top: 84px; }
+  html { scroll-padding-top: calc(var(--header-h) + 10px); }
+
+  /* Desktop lets the hero run under a transparent header. On mobile the header
+     is opaque, so the photo starts below it with a band of breathing room. */
+  .hero {
+    margin-top: calc(var(--header-h) + var(--hero-gap));
+    min-height: calc(92svh - var(--header-h) - var(--hero-gap));
+  }
 
   .site-header {
     /* Nav is fixed-positioned below, so the toggle and the logo are the only
@@ -773,7 +784,7 @@ body.is-locked { overflow: hidden; }
   .nav {
     position: fixed;
     inset: 0 0 auto;
-    top: 76px;
+    top: var(--header-h);
     flex-direction: column;
     align-items: center;
     gap: 0;
@@ -807,7 +818,6 @@ body.is-locked { overflow: hidden; }
 }
 
 @media (max-width: 560px) {
-  .hero { min-height: 92svh; }
   .hero__rule { inset: 14px; }
   .hero__cta .btn { flex: 1 1 100%; text-align: center; }
   .trust ul { grid-template-columns: 1fr; }
