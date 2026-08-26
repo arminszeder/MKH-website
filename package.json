@@ -9,9 +9,6 @@
   },
   "scripts": {
     "dev": "python3 -m http.server 5173",
-    "check": "node --check main.js && node --check api/contact.js"
-  },
-  "dependencies": {
-    "nodemailer": "^9.0.5"
+    "check": "node --check main.js"
   }
 }

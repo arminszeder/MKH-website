@@ -8,8 +8,7 @@ serverless függvénnyel az ajánlatkérő űrlaphoz.
 index.html          a főoldal
 adatkezeles.html    adatkezelési tájékoztató (GDPR)
 styles.css          a teljes stíluslap
-main.js             menü, galéria szűrő, lightbox, előtte/utána csúszka, űrlap
-api/contact.js      POST /api/contact — e-mail küldés Resenden keresztül
+main.js             menü, galéria szűrő, lightbox, előtte/utána csúszka
 assets/             fotók, logó, favicon
 source/             eredeti, feldolgozatlan forrásfájlok (nem kerül ki élesbe)
 ```
@@ -17,49 +16,23 @@ source/             eredeti, feldolgozatlan forrásfájlok (nem kerül ki élesb
 ## Helyi futtatás
 
 ```bash
-npm run dev            # http://127.0.0.1:5173 — statikus, /api nélkül
+npm run dev            # http://127.0.0.1:5173
 ```
 
-Az `/api/contact` végponthoz a Vercel CLI kell:
+Teljesen statikus oldal: nincs build lépés, nincs szerveroldali kód, nincs
+adatbázis és nincsenek környezeti változók. A kapcsolatfelvétel `tel:` és
+`mailto:` linkeken keresztül történik.
 
-```bash
-npm i -g vercel
-cp .env.example .env.local     # töltsd ki a kulcsokat
-vercel dev
-```
-
-Az űrlap `/api` nélkül is használható marad: ha a küldés nem sikerül, a látogató
-egy előre kitöltött `mailto:` linket kap.
-
-## Környezeti változók
-
-A Vercelen: **Project → Settings → Environment Variables**.
-
-| Név | Kötelező | Leírás |
-| --- | --- | --- |
-| `GMAIL_USER` | igen | a küldő Gmail-fiók, pl. `info.mkhwerk@gmail.com` |
-| `GMAIL_APP_PASSWORD` | igen | 16 karakteres Google App Password — **nem** a fiók jelszava |
-| `MAIL_TO` | nem | ide érkeznek az ajánlatkérések; alapértelmezés a `GMAIL_USER` |
-
-### App Password létrehozása
-
-1. A Google-fiókon kapcsold be a **2-lépcsős azonosítást**
-2. Nyisd meg: https://myaccount.google.com/apppasswords
-3. Adj neki nevet (pl. „MKH Werk weboldal"), és másold ki a 16 karaktert
-4. Szóközök nélkül illeszd be a `GMAIL_APP_PASSWORD` értékének
-
-A Gmail csak a hitelesített fiókot (vagy annak igazolt aliasát) engedi a
-`From` mezőben, ezért az ügyfél címe a `Reply-To`-ba kerül — a levélre válaszolva
-közvetlenül az érdeklődőnek írsz. A Gmail napi kb. 500 kimenő levelet enged.
+> Ha később mégis kell ajánlatkérő űrlap, a `5269fca` commit tartalmazza a
+> működő változatot (Gmail SMTP, validáció, fotócsatolás) — onnan visszaemelhető.
 
 ## Mielőtt élesbe megy — cseréld ki
 
 A kódban `TODO` megjegyzés jelöli mindegyiket:
 
-- **Telefonszám** `+36 30 000 0000` — `index.html` (ajánlatkérés blokk, footer,
+- **Telefonszám** `+36 30 000 0000` — `index.html` (kapcsolat blokk, footer,
   JSON-LD), `adatkezeles.html`
-- **E-mail** `info@mkhwerk.hu` — `index.html` footer + JSON-LD,
-  `main.js` (`FALLBACK_MAIL`), `adatkezeles.html`
+- **E-mail** — `index.html` (kapcsolat blokk, footer, JSON-LD), `adatkezeles.html`
 - **Facebook URL** — `index.html` footer
 - **Cégadatok** (cégnév, székhely, adószám) — `adatkezeles.html`
 - **Domain** — `index.html` `canonical` + JSON-LD, `robots.txt`, `sitemap.xml`
@@ -97,8 +70,8 @@ A `.craft__shots img` szabály gondoskodik a kitöltésről, más módosítás n
 npm run check          # szintaxis-ellenőrzés
 ```
 
-A böngészős és API-teszteket a fejlesztés során Playwrighttal futtattuk
-(galéria szűrő, lightbox, csúszka, űrlap-validáció, Resend hívás alakja).
+A böngészős teszteket a fejlesztés során Playwrighttal futtattuk
+(galéria szűrő, lightbox, előtte/utána csúszka, mobilmenü, horgonylinkek).
 
 ## Deploy
 

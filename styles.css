@@ -570,131 +570,68 @@ input::placeholder, textarea::placeholder { color: rgba(142, 138, 123, 0.7); }
 }
 .callbox__hours { margin-top: 10px; font-size: 15px; color: var(--muted); }
 
-.formcard {
+.contact {
   flex: 1 1 480px;
   min-width: 0;
+  align-self: flex-start;
   border: 1px solid var(--hair);
-  padding: clamp(24px, 3vw, 48px);
   background: rgba(27, 34, 20, 0.75);
 }
 
-.form {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 22px;
+.contact__row {
+  display: block;
+  padding: clamp(22px, 2.4vw, 32px) clamp(24px, 3vw, 40px);
+  color: var(--cream);
+  transition: background 200ms ease;
 }
-/* `display: grid/flex` outranks the [hidden] UA rule, so restate it. */
-.form[hidden], .field[hidden], .form__foot[hidden] { display: none; }
+.contact__row + .contact__row,
+.contact__social { border-top: 1px solid var(--hair2); }
+a.contact__row:hover { background: rgba(198, 161, 91, 0.06); }
+a.contact__row:hover .contact__value { color: var(--g2); }
 
-.field { display: flex; flex-direction: column; gap: 9px; }
-.field--full { grid-column: 1 / -1; }
-.field > span {
+.contact__label {
+  display: block;
   font-size: 11px;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
   color: var(--muted);
+  margin-bottom: 12px;
 }
-.field input,
-.field select,
-.field textarea {
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid var(--hair);
-  color: var(--cream);
-  font-size: 17px;
-  font-weight: 300;
-  padding: 10px 2px;
-  outline: none;
-  transition: border-color 200ms ease;
-  border-radius: 0;
-}
-.field input:focus,
-.field select:focus,
-.field textarea:focus { border-bottom-color: var(--g2); }
-.field textarea { resize: vertical; min-height: 76px; }
-.field select {
-  appearance: none;
-  cursor: pointer;
-  padding-right: 26px;
-  background-image:
-    linear-gradient(45deg, transparent 50%, var(--g) 50%),
-    linear-gradient(135deg, var(--g) 50%, transparent 50%);
-  background-position: calc(100% - 12px) calc(50% + 2px), calc(100% - 6px) calc(50% + 2px);
-  background-size: 6px 6px, 6px 6px;
-  background-repeat: no-repeat;
-}
-.field select option { background: var(--panel); color: var(--cream); }
-.field input:user-invalid,
-.field textarea:user-invalid { border-bottom-color: #C6564B; }
-
-/* Native validation message, surfaced inline so it is styled and translated. */
-.field__error {
-  font-size: 13px;
-  color: #E08B82;
-  min-height: 0;
-}
-.field__error:empty { display: none; }
-
-.dropzone {
-  grid-column: 1 / -1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  flex-wrap: wrap;
-  border: 1px dashed var(--hair);
-  padding: 20px 22px;
-  cursor: pointer;
-  transition: border-color 200ms ease, background 200ms ease;
-}
-.dropzone:hover, .dropzone.is-over { border-color: var(--g); background: rgba(198, 161, 91, 0.06); }
-.dropzone input { display: none; }
-.dropzone__text { font-size: 15px; opacity: 0.85; }
-.dropzone__files { color: var(--muted); }
-.dropzone__btn {
-  font-size: 11px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
+.contact__value {
+  display: block;
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: clamp(19px, 1.7vw, 24px);
+  line-height: 1.25;
   color: var(--g2);
-  border: 1px solid var(--g);
-  padding: 9px 18px;
-  white-space: nowrap;
+  word-break: break-word;
+  transition: color 200ms ease;
 }
+.contact__value--lg { font-size: clamp(24px, 2.2vw, 32px); }
 
-/* Off-screen honeypot: bots fill it, people never see it. */
-.hp {
-  position: absolute;
-  left: -9999px;
-  width: 1px; height: 1px;
-  overflow: hidden;
+/* Cinzel is an all-caps display face; an address is unreadable in it. */
+.contact__value--plain {
+  font-family: 'Jost', system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(17px, 1.4vw, 20px);
+  letter-spacing: 0.01em;
 }
-
-.form__foot {
-  grid-column: 1 / -1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  flex-wrap: wrap;
-}
-.form__legal { font-size: 13px; line-height: 1.5; color: var(--muted); max-width: 340px; }
-
-.form__status {
-  grid-column: 1 / -1;
+.contact__note {
+  display: block;
+  margin-top: 10px;
   font-size: 15px;
-  line-height: 1.6;
-  padding: 14px 18px;
-  border: 1px solid #7A3B34;
-  background: rgba(122, 59, 52, 0.16);
-  color: #E8B4AD;
+  line-height: 1.5;
+  color: var(--muted);
 }
-.form__status[hidden] { display: none; }
-.form__status a { color: var(--g2); text-decoration: underline; }
 
-.thanks { padding: 40px 0; }
-.thanks h3 { font-size: 30px; margin: 0; }
-.thanks p { margin: 18px 0 0; font-size: 17px; line-height: 1.7; opacity: 0.8; }
-.thanks[hidden] { display: none; }
+.contact__social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  padding: 20px clamp(24px, 3vw, 40px);
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
 
 /* ----------------------------------------------------------------- footer -- */
 
@@ -876,8 +813,6 @@ body.is-locked { overflow: hidden; }
   .trust ul { grid-template-columns: 1fr; }
   .trust li { border-left: 0 !important; }
   .trust li + li { border-top: 1px solid var(--hair2); }
-  .form__foot { flex-direction: column; align-items: stretch; }
-  .form__foot .btn { width: 100%; }
   .footer__bar { flex-direction: column; }
 }
 

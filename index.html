@@ -34,7 +34,7 @@
   "url": "https://mkhwerk.hu/",
   "image": "https://mkhwerk.hu/assets/gate-anthracite.jpg",
   "telephone": "+36300000000",
-  "email": "info@mkhwerk.hu",
+  "email": "info.mkhwerk@gmail.com",
   "address": { "@type": "PostalAddress", "addressLocality": "Mosonmagyaróvár", "addressCountry": "HU" },
   "areaServed": "Mosonmagyaróvár és környéke",
   "openingHours": "Mo-Sa 08:00-18:00"
@@ -50,7 +50,7 @@
     <a href="#galeria">Munkáink</a>
     <a href="#folyamat">Folyamat</a>
     <a href="#lovas">Lóbútor</a>
-    <a href="#ajanlat">Ajánlatkérés</a>
+    <a href="#kapcsolat">Kapcsolat</a>
   </nav>
 
   <button class="nav-toggle" id="navToggle" type="button"
@@ -77,7 +77,7 @@
       <h1>Széleskörű lakatosmunkák, egyedileg tervezve, készítve</h1>
       <p>Tervezés, gyártás és beszerelés egy kézből. Kapuk, korlátok, kerítések és lovas szerkezetek — a helyszíni méretek alapján, saját műhelyünkben.</p>
       <div class="hero__cta">
-        <a class="btn btn--solid" href="#ajanlat">Díjtalan felmérés</a>
+        <a class="btn btn--solid" href="#kapcsolat">Díjtalan felmérés</a>
         <a class="btn btn--ghost" href="#galeria">Munkáink megtekintése</a>
       </div>
     </div>
@@ -222,7 +222,7 @@
           <h2>Utánfutók, szekrények, istállóelemek</h2>
           <p>Csapatunk a lovas szegmensben is rendelkezik tapasztalattal. Szekrényektől kezdve teljes lószállító-átalakításokat vállalunk.</p>
           <p>Boxajtók, rácsok, etetők és istállóelemek — a meglévő adottságokhoz igazítva, a ló és a kezelő biztonságát szem előtt tartva.</p>
-          <a class="btn" href="#ajanlat" style="margin-top:36px">Felmérés kérése</a>
+          <a class="btn" href="#kapcsolat" style="margin-top:36px">Felmérés kérése</a>
         </div>
       </div>
     </div>
@@ -273,89 +273,41 @@
     </div>
   </section>
 
-  <section class="section section--line" id="ajanlat">
+  <section class="section section--line" id="kapcsolat">
     <div class="wrap enquiry">
 
       <div class="enquiry__intro reveal">
-        <div class="eyebrow">Ajánlatkérés</div>
-        <h2>Küldjön egy fotót a helyszínről, és ingyenes látványtervet készítünk</h2>
-        <p>Egy telefonnal készült kép is elég. A fotó alapján megmutatjuk, hogyan néz ki a kapu vagy a kerítés az Ön házán, mérnöki rajz nélkül.</p>
-
-        <div class="callbox">
-          <div class="callbox__label">Inkább telefonon</div>
-          <!-- TODO: cseréld a valós telefonszámra (itt, a footerben és a JSON-LD blokkban is). -->
-          <a class="callbox__tel" href="tel:+36300000000">+36 30 000 0000</a>
-          <div class="callbox__hours">Hétfőtől szombatig, 8:00 – 18:00</div>
-        </div>
+        <div class="eyebrow">Kapcsolat</div>
+        <h2>Kérjen díjtalan felmérést</h2>
+        <p>Hívjon vagy írjon, és egyeztetünk egy időpontot. Kimegyünk a helyszínre,
+          felmérjük a munkát, és fix árat adunk — mindez díjtalan.</p>
+        <p>Ha van fotója a helyszínről, küldje el e-mailben; sokszor az alapján is
+          tudunk előzetes elképzelést adni.</p>
       </div>
 
-      <div class="formcard reveal">
-        <form class="form" id="enquiryForm" novalidate>
-          <label class="field">
-            <span>Név</span>
-            <input type="text" name="nev" autocomplete="name" required>
-            <em class="field__error" data-error-for="nev"></em>
-          </label>
+      <div class="contact reveal">
+        <!-- TODO: valós telefonszám, e-mail cím és Facebook-oldal. -->
+        <a class="contact__row" href="tel:+36300000000">
+          <span class="contact__label">Telefon</span>
+          <span class="contact__value contact__value--lg">+36 30 000 0000</span>
+          <span class="contact__note">Hétfőtől szombatig, 8:00 – 18:00</span>
+        </a>
 
-          <label class="field">
-            <span>Telefon</span>
-            <input type="tel" name="telefon" autocomplete="tel" required>
-            <em class="field__error" data-error-for="telefon"></em>
-          </label>
+        <a class="contact__row" href="mailto:info.mkhwerk@gmail.com">
+          <span class="contact__label">E-mail</span>
+          <span class="contact__value contact__value--plain">info.mkhwerk@gmail.com</span>
+          <span class="contact__note">Fotókkal együtt is küldheti</span>
+        </a>
 
-          <label class="field">
-            <span>E-mail</span>
-            <input type="email" name="email" autocomplete="email">
-            <em class="field__error" data-error-for="email"></em>
-          </label>
+        <div class="contact__row contact__row--static">
+          <span class="contact__label">Műhely</span>
+          <span class="contact__value">Mosonmagyaróvár</span>
+          <span class="contact__note">Mosonmagyaróvár és környéke, egyeztetés szerint tágabb körben is</span>
+        </div>
 
-          <label class="field">
-            <span>Munka típusa</span>
-            <select name="tipus">
-              <option value="Kapu">Kapu</option>
-              <option value="Korlát">Korlát</option>
-              <option value="Kerítés">Kerítés</option>
-              <option value="Lóbútor, istálló">Lóbútor, istálló</option>
-              <option value="Egyéb">Egyéb</option>
-            </select>
-          </label>
-
-          <label class="field field--full">
-            <span>Üzenet</span>
-            <textarea name="uzenet" rows="3" placeholder="Méretek, helyszín, elképzelés"></textarea>
-          </label>
-
-          <label class="dropzone" id="dropzone">
-            <span class="dropzone__text">
-              Fotó a helyszínről
-              <span class="dropzone__files" id="fileLabel">— nincs kiválasztva</span>
-            </span>
-            <span class="dropzone__btn">Fotó feltöltése</span>
-            <input type="file" name="foto" id="fileInput" accept="image/*" multiple>
-          </label>
-
-          <!-- Spam trap. Hidden from people, left blank by them; bots fill it in. -->
-          <div class="hp" aria-hidden="true">
-            <label>Ne töltse ki
-              <input type="text" name="company" tabindex="-1" autocomplete="off">
-            </label>
-          </div>
-
-          <p class="form__status" id="formStatus" role="alert" hidden></p>
-
-          <div class="form__foot">
-            <span class="form__legal">
-              Az adatokat kizárólag az ajánlatadáshoz használjuk. Részletek az
-              <a href="/adatkezeles.html">adatkezelési tájékoztatóban</a>.
-            </span>
-            <button class="btn" type="submit" id="submitBtn">Ajánlatot kérek</button>
-          </div>
-        </form>
-
-        <div class="thanks" id="thanks" hidden>
-          <div class="eyebrow">Megkaptuk</div>
-          <h3>Köszönjük a megkeresést</h3>
-          <p>Egy munkanapon belül keressük telefonon, és egyeztetjük a felmérés időpontját.</p>
+        <div class="contact__social">
+          <a href="https://facebook.com/" target="_blank" rel="noopener">Facebook</a>
+          <a href="https://instagram.com/mkh_werk" target="_blank" rel="noopener">Instagram</a>
         </div>
       </div>
 
@@ -375,7 +327,7 @@
         <span>Elérhetőség</span>
         <!-- TODO: valós telefonszám és e-mail cím. -->
         <a href="tel:+36300000000">+36 30 000 0000</a>
-        <a href="mailto:info@mkhwerk.hu">info@mkhwerk.hu</a>
+        <a href="mailto:info.mkhwerk@gmail.com">info.mkhwerk@gmail.com</a>
         <span style="color:var(--cream);opacity:.85;letter-spacing:0;text-transform:none;font-size:16px;margin:0">Mosonmagyaróvár, Magyarország</span>
       </div>
 
