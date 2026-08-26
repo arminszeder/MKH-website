@@ -436,8 +436,9 @@ input::placeholder, textarea::placeholder { color: rgba(142, 138, 123, 0.7); }
   text-transform: uppercase;
   color: var(--muted);
 }
-.compare__tag--after { left: 18px; border-color: var(--g); color: var(--g2); }
-.compare__tag--before { right: 18px; }
+/* Before on the left, finished work on the right and picked out in gold. */
+.compare__tag--before { left: 18px; }
+.compare__tag--after { right: 18px; border-color: var(--g); color: var(--g2); }
 /* Drag affordance lives in the caption panel, off the photograph. */
 .card__hint {
   display: flex;

@@ -215,7 +215,7 @@
       pct = Math.max(0, Math.min(100, pct));
       compare.style.setProperty('--pos', pct + '%');
       handle.setAttribute('aria-valuenow', String(Math.round(pct)));
-      handle.setAttribute('aria-valuetext', Math.round(pct) + '% — utána');
+      handle.setAttribute('aria-valuetext', Math.round(pct) + '% — előtte');
       // The hint lives in the caption panel, so mark the card, not the image.
       var card = compare.closest('.card') || compare;
       card.classList.add('is-touched');
