@@ -216,7 +216,9 @@
       compare.style.setProperty('--pos', pct + '%');
       handle.setAttribute('aria-valuenow', String(Math.round(pct)));
       handle.setAttribute('aria-valuetext', Math.round(pct) + '% — utána');
-      compare.classList.add('is-touched');
+      // The hint lives in the caption panel, so mark the card, not the image.
+      var card = compare.closest('.card') || compare;
+      card.classList.add('is-touched');
     };
 
     var track = function (clientX) {
