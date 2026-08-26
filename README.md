@@ -30,10 +30,8 @@ adatbázis és nincsenek környezeti változók. A kapcsolatfelvétel `tel:` és
 
 A kódban `TODO` megjegyzés jelöli mindegyiket:
 
-- **Telefonszám** `+36 30 000 0000` — `index.html` (kapcsolat blokk, footer,
-  JSON-LD), `adatkezeles.html`
-- **E-mail** — `index.html` (kapcsolat blokk, footer, JSON-LD), `adatkezeles.html`
-- **Facebook URL** — `index.html` footer
+- **Facebook URL** — `index.html` (kapcsolat blokk és footer), jelenleg
+  általános `facebook.com` link
 - **Cégadatok** (cégnév, székhely, adószám) — `adatkezeles.html`
 - **Domain** — `index.html` `canonical` + JSON-LD, `robots.txt`, `sitemap.xml`
 
