@@ -11,6 +11,7 @@ styles.css          a teljes stíluslap
 main.js             menü, galéria szűrő, lightbox, előtte/utána csúszka, űrlap
 api/contact.js      POST /api/contact — e-mail küldés Resenden keresztül
 assets/             fotók, logó, favicon
+source/             eredeti, feldolgozatlan forrásfájlok (nem kerül ki élesbe)
 ```
 
 ## Helyi futtatás
@@ -67,9 +68,22 @@ szűrőre jelenik meg — ha új kategóriát adsz meg, vegyél fel hozzá egy g
 A lightboxhoz a gomb `data-src`, `data-cat`, `data-title` és `data-line`
 attribútumai kellenek.
 
-> A „Lovas" és „A műhely" szekcióhoz nem érkezett fotó, ezért ezek jelenleg
-> emblémával, illetve szöveges adatlappal jelennek meg. Ha lesz műhelyfotó,
-> érdemes képre cserélni.
+### „A műhely" képhelyek
+
+A szekció három helyőrzőt tartalmaz (`.slot`): egy magasat balra
+(„Hegesztés a műhelyben"), és két kisebbet jobbra („Készülő szerkezet",
+„Részlet, felület"). Fotó behelyezése: a `.slot` div teljes tartalmát — az
+SVG ikont és a feliratot — cseréld le egyetlen képre:
+
+```html
+<div class="slot slot--tall">
+  <img src="/assets/hegesztes.jpg" alt="Hegesztés a műhelyben" loading="lazy">
+</div>
+```
+
+A `.craft__shots img` szabály gondoskodik a kitöltésről, más módosítás nem kell.
+
+> A „Lovas" szekcióhoz sem érkezett fotó, ott jelenleg az embléma szerepel.
 
 ## Tesztek
 

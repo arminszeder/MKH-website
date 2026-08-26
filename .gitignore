@@ -8,3 +8,6 @@ node_modules/
 # Design-canvas export the site was built from — kept out of the deploy.
 unpacked/
 *.zip
+
+# Original, unprocessed source art kept locally for reference.
+source/
