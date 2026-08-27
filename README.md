@@ -8,7 +8,7 @@ serverless függvénnyel az ajánlatkérő űrlaphoz.
 index.html          a főoldal
 adatkezeles.html    adatkezelési tájékoztató (GDPR)
 styles.css          a teljes stíluslap
-main.js             menü, galéria szűrő, lightbox, előtte/utána csúszka
+main.js             menü, lightbox, előtte/utána csúszka
 assets/             fotók, logó, favicon
 source/             eredeti, feldolgozatlan forrásfájlok (nem kerül ki élesbe)
 ```
@@ -38,12 +38,11 @@ A kódban `TODO` megjegyzés jelöli mindegyiket:
 ## Fotók cseréje, új munka hozzáadása
 
 Tedd a képet az `assets/` mappába, majd másolj egy `<article class="card">`
-blokkot az `index.html` galériájában. A `data-cat` értéke határozza meg, melyik
-szűrőre jelenik meg — ha új kategóriát adsz meg, vegyél fel hozzá egy gombot is a
-`.filters` sávba ugyanazzal a `data-cat` értékkel.
+blokkot az `index.html` galériájában. Minden munka mindig látszik, kategória
+szerinti szűrő nincs.
 
 A lightboxhoz a gomb `data-src`, `data-cat`, `data-title` és `data-line`
-attribútumai kellenek.
+attribútumai kellenek — a `data-cat` a lightboxban megjelenő kategórianév.
 
 ### „A műhely" képhelyek
 
@@ -70,7 +69,7 @@ npm run check          # szintaxis-ellenőrzés
 npm install                       # csak először
 npx playwright install chromium   # csak először
 npm run dev &
-npm test               # tests/site.mjs — galéria szűrő, lightbox,
+npm test               # tests/site.mjs — galéria, lightbox,
                        # előtte/utána csúszka, mobilmenü, horgonylinkek
 ```
 

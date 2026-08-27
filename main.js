@@ -85,37 +85,6 @@
     }
   }
 
-  /* ------------------------------------------------------------ filters -- */
-
-  var filterBar = $('#filters');
-  var grid = $('#grid');
-  var emptyMsg = $('#galleryEmpty');
-
-  if (filterBar && grid) {
-    filterBar.addEventListener('click', function (e) {
-      var btn = e.target.closest('.filter');
-      if (!btn) return;
-
-      var cat = btn.dataset.cat;
-      $$('.filter', filterBar).forEach(function (b) {
-        b.setAttribute('aria-pressed', String(b === btn));
-      });
-
-      var visible = 0;
-      $$('.card', grid).forEach(function (card) {
-        var show = cat === 'Mind' || card.dataset.cat === cat;
-        card.hidden = !show;
-        if (show) {
-          visible++;
-          // Re-run the reveal so filtered-in cards do not appear pre-faded.
-          card.classList.add('is-in');
-        }
-      });
-
-      if (emptyMsg) emptyMsg.hidden = visible > 0;
-    });
-  }
-
   /* ----------------------------------------------------------- lightbox -- */
 
   var lb = $('#lightbox');

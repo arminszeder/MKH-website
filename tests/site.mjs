@@ -15,19 +15,11 @@ const errs = [];
 p.on('pageerror', e => errs.push(e.message));
 await p.goto(base + '/', { waitUntil: 'networkidle' });
 
-// --- filters -------------------------------------------------------------
-await p.getByRole('button', { name: 'Kapuk', exact: true }).click();
-t('filter Kapuk shows 1 card', await p.locator('.card:visible').count() === 1);
-t('filter Kapuk pressed', await p.getByRole('button', { name: 'Kapuk', exact: true }).getAttribute('aria-pressed') === 'true');
-await p.getByRole('button', { name: 'Korlátok', exact: true }).click();
-t('filter Korlátok shows the compare card', await p.locator('.card--wide:visible').count() === 1);
-t('empty msg hidden when results exist', await p.locator('#galleryEmpty').isHidden());
-await p.getByRole('button', { name: 'Kerti munkák', exact: true }).click();
-t('filter Kerti munkák shows the padel project', await p.locator('.card:visible').count() === 1);
+// --- gallery -------------------------------------------------------------
+t('gallery shows all 4 cards', await p.locator('.card:visible').count() === 4);
+t('compare card present', await p.locator('.card--wide:visible').count() === 1);
 t('multi-photo card exposes 3 lightbox targets',
-  (await p.locator('.card:visible [data-lightbox]').count()) === 3);
-await p.getByRole('button', { name: 'Mind', exact: true }).click();
-t('filter Mind restores 4', await p.locator('.card:visible').count() === 4);
+  (await p.locator('.card[data-cat="Kerti munkák"] [data-lightbox]').count()) === 3);
 
 // --- lightbox ------------------------------------------------------------
 await p.locator('[data-lightbox]').first().click();

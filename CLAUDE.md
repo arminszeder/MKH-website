@@ -15,7 +15,7 @@ dev-only, for the test script.
 index.html          the page
 adatkezeles.html    GDPR notice
 styles.css          all styles
-main.js             header, mobile nav, gallery filter, lightbox, compare slider
+main.js             header, mobile nav, lightbox, compare slider
 assets/             web-ready images (originals are NOT here)
 source/             original unprocessed art — gitignored, local only
 unpacked/           the Claude Design canvas this was built from — gitignored
@@ -43,11 +43,20 @@ JSON-LD and sitemap still say `mkhwerk.hu` as a placeholder.
   holds the *before* shot, so before reads on the left. Swapping the images
   means also swapping the `--before`/`--after` tag sides and the gold emphasis,
   plus `aria-valuetext` in `main.js`.
-- **`assets/mkh-logo.png` is derived art.** The supplied logo
-  (`source/mkh-logo-original.png`) is gold artwork on an opaque gold background.
-  The background was flood-filled out from the borders with a per-neighbour
-  tolerance, plus a separate seed for the pocket enclosed between the K and H.
-  Never swap the original back in — it renders as a gold block.
+- **Every logo asset is derived art.** The supplied logo
+  (`source/mkh-logo-v2-original.png`) is bronze artwork on an opaque dark
+  gradient. The background was flood-filled out from the borders with a
+  per-neighbour luminance tolerance (tol 8, cap 150), blurred 1.2px for
+  antialiasing, cropped to the artwork, scaled to 1200px wide and quantised to
+  256 colours — that is `assets/mkh-logo.png`. Never swap an original back in;
+  it renders as a dark rectangle on the page.
+- **Two logo files, and the header must use the mark.**
+  `assets/mkh-logo.png` is the full lockup (mark over the `MKH WERK` wordline);
+  it is only used where it renders large — the lovas block (340px) and the
+  footer (88px). `assets/mkh-logo-mark.png` is the same image cropped above the
+  wordline, for the 52px header, where the wordline is illegible mush and just
+  steals height from the mark. `assets/favicon.png` / `.ico` are that mark
+  centred on `--deep`.
 - **`<img width>/<height>` are CSS presentational hints.** Setting only `width`
   in CSS leaves the height hint active and stretches the image. A global
   `img { height: auto }` guards this; keep it.
@@ -71,9 +80,10 @@ JSON-LD and sitemap still say `mkhwerk.hu` as a placeholder.
 ## Adding a project to the gallery
 
 Put the web-sized image in `assets/`, copy an `<article class="card">` block in
-the gallery. `data-cat` decides which filter shows it; a new category also needs
-a button in `.filters` with the same `data-cat`. The lightbox reads `data-src`,
-`data-cat`, `data-title`, `data-line` from each `[data-lightbox]` button.
+the gallery. The gallery has no category filter — every card is always shown.
+`data-cat` survives only as the label the lightbox prints. The lightbox reads
+`data-src`, `data-cat`, `data-title`, `data-line` from each `[data-lightbox]`
+button.
 
 For a multi-photo project, follow the Oázis Padel card: lead image in
 `.card__shot`, extras as `.card__thumb` buttons inside `.card__thumbs`.
@@ -97,7 +107,7 @@ Do not rebuild it from scratch.
 
 ## Verifying changes
 
-`tests/site.mjs` is a Playwright script covering the filter, lightbox, compare
+`tests/site.mjs` is a Playwright script covering the gallery, lightbox, compare
 slider, mobile nav and anchors. It needs the dev server running:
 
 ```bash

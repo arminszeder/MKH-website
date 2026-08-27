@@ -260,20 +260,6 @@ input::placeholder, textarea::placeholder { color: rgba(142, 138, 123, 0.7); }
 
 /* --------------------------------------------------------------- gallery -- */
 
-.filters { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 36px; }
-.filter {
-  padding: 11px 24px;
-  background: transparent;
-  border: 1px solid rgba(198, 161, 91, 0.2);
-  color: var(--muted);
-  font-size: 12px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 180ms ease;
-}
-.filter:hover { border-color: var(--g); color: var(--g2); }
-.filter[aria-pressed="true"] { background: var(--g); border-color: var(--g); color: var(--deep); }
 
 .grid { display: flex; flex-wrap: wrap; gap: 28px; align-items: flex-start; }
 
@@ -380,15 +366,6 @@ input::placeholder, textarea::placeholder { color: rgba(142, 138, 123, 0.7); }
 }
 .card__body h3 { font-size: 21px; }
 .card__body p { margin: 0; font-size: 15px; line-height: 1.5; color: var(--muted); }
-
-.gallery__empty {
-  width: 100%;
-  padding: 60px 0;
-  text-align: center;
-  color: var(--muted);
-  font-size: 15px;
-  letter-spacing: 0.06em;
-}
 
 /* --------------------------------------------------- before / after slider */
 
