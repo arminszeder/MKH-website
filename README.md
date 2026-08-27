@@ -39,7 +39,8 @@ A kódban `TODO` megjegyzés jelöli mindegyiket:
 
 Tedd a képet az `assets/` mappába, majd másolj egy `<article class="card">`
 blokkot az `index.html` galériájában. Minden munka mindig látszik, kategória
-szerinti szűrő nincs.
+szerinti szűrő nincs. Egy soron belül minden kártya azonos magasságú lesz — ehhez
+nem kell semmit beállítani.
 
 A lightboxhoz a gomb `data-src`, `data-cat`, `data-title` és `data-line`
 attribútumai kellenek — a `data-cat` a lightboxban megjelenő kategórianév.

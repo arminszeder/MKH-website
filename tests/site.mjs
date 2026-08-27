@@ -16,10 +16,25 @@ p.on('pageerror', e => errs.push(e.message));
 await p.goto(base + '/', { waitUntil: 'networkidle' });
 
 // --- gallery -------------------------------------------------------------
-t('gallery shows all 4 cards', await p.locator('.card:visible').count() === 4);
+t('gallery shows all 5 cards', await p.locator('.card:visible').count() === 5);
 t('compare card present', await p.locator('.card--wide:visible').count() === 1);
 t('multi-photo card exposes 3 lightbox targets',
   (await p.locator('.card[data-cat="Kerti munkák"] [data-lightbox]').count()) === 3);
+
+// Every card in a row must come out the same height — the multi-photo card gives
+// its thumb strip back out of the lead shot, and the bodies absorb the rest.
+const rowHeights = await p.$$eval('.card:not(.card--wide)', els => {
+  const rows = new Map();
+  for (const el of els) {
+    const r = el.getBoundingClientRect();
+    const key = Math.round(r.top);
+    (rows.get(key) ?? rows.set(key, []).get(key)).push(Math.round(r.height));
+  }
+  return [...rows.values()];
+});
+t('cards in a row are the same height',
+  rowHeights.every(hs => Math.max(...hs) - Math.min(...hs) <= 1),
+  JSON.stringify(rowHeights));
 
 // --- lightbox ------------------------------------------------------------
 await p.locator('[data-lightbox]').first().click();
@@ -27,7 +42,7 @@ t('lightbox opens', await p.locator('#lightbox').isVisible());
 t('lightbox src set', (await p.locator('#lightboxImg').getAttribute('src')).includes('gate-anthracite'));
 await p.locator('#lightboxNext').click();
 t('lightbox next advances', (await p.locator('#lightboxImg').getAttribute('src')).includes('fence-wood'));
-t('lightbox spans every visible photo', (await p.locator('[data-lightbox]').count()) === 5);
+t('lightbox spans every visible photo', (await p.locator('[data-lightbox]').count()) === 6);
 await p.keyboard.press('ArrowLeft');
 t('lightbox arrow key goes back', (await p.locator('#lightboxImg').getAttribute('src')).includes('gate-anthracite'));
 t('body scroll locked', await p.evaluate(() => document.body.classList.contains('is-locked')));

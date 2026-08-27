@@ -63,6 +63,12 @@ JSON-LD and sitemap still say `mkhwerk.hu` as a placeholder.
 - **`[hidden]` loses to `display: grid/flex`.** Rules like `.form[hidden]`
   exist to restate `display: none`. Any new flex/grid element that gets toggled
   with `hidden` needs the same.
+- **The gallery is a CSS grid, and the equal-height rules are load-bearing.**
+  `repeat(auto-fill, minmax(340px, 1fr))` keeps a part-filled last row at column
+  width instead of stretching one card across the section, and grid gives a
+  row's cards a shared height for free. `.card` is a flex column and
+  `.card__body` takes `flex: 1` so the caption, not the photo, absorbs the
+  slack. `.card--wide` claims the whole row with `grid-column: 1 / -1`.
 - **`--header-h` (87px) drives three things**: the mobile hero's top offset, the
   mobile nav panel's `top`, and `scroll-padding-top`. Change the header's size
   and all three must follow.
@@ -86,9 +92,13 @@ the gallery. The gallery has no category filter — every card is always shown.
 button.
 
 For a multi-photo project, follow the Oázis Padel card: lead image in
-`.card__shot`, extras as `.card__thumb` buttons inside `.card__thumbs`.
+`.card__shot`, extras as `.card__thumb` buttons inside `.card__thumbs`. The
+thumb strip comes out of the lead shot's height (`:has(.card__thumbs)` drops it
+to 288px) so the media block still measures 420px like every other card — do not
+give a multi-photo card a full-height lead shot, it puts the whole row out of
+level.
 
-Resize before committing — the source photos are 3–4 MB, the site's are 150–650 KB.
+Resize before committing — the source photos are 3–4 MB, the site's are 115–650 KB.
 
 ## Removed on purpose
 

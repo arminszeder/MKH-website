@@ -261,21 +261,33 @@ input::placeholder, textarea::placeholder { color: rgba(142, 138, 123, 0.7); }
 /* --------------------------------------------------------------- gallery -- */
 
 
-.grid { display: flex; flex-wrap: wrap; gap: 28px; align-items: flex-start; }
+/* Grid, not wrapping flex: a row's cards then come out the same height on their
+   own, and a part-filled last row keeps its column width instead of stretching
+   one card across the section. auto-fill holds the empty tracks open so the
+   next project drops into the gap. */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 28px;
+}
 
 .card {
-  flex: 1 1 340px;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
   border: 1px solid var(--hair2);
   background: var(--panel);
   transition: border-color 220ms ease, transform 220ms ease;
 }
+/* Soaks up the height difference between a two-line and a four-line caption. */
+.card__body { flex: 1 1 auto; }
 .card:hover { border-color: var(--hair); }
 /* Full-width row: the portrait comparison sits beside its caption so the card's
    border wraps content on both sides instead of empty panel. */
 .card--wide {
-  flex-basis: 100%;
+  grid-column: 1 / -1;
   display: flex;
+  flex-direction: row;
   align-items: stretch;
 }
 .card--wide .card__body {
@@ -295,6 +307,7 @@ input::placeholder, textarea::placeholder { color: rgba(142, 138, 123, 0.7); }
   display: block;
   width: 100%;
   height: 420px;
+  flex: none;
   padding: 0;
   border: 0;
   background: var(--deep);
@@ -323,8 +336,12 @@ input::placeholder, textarea::placeholder { color: rgba(142, 138, 123, 0.7); }
 }
 .card__shot:hover .card__zoom, .card__shot:focus-visible .card__zoom { opacity: 1; }
 
-/* Supporting shots for a multi-photo project. */
+/* Supporting shots for a multi-photo project. The thumb strip (130px + its two
+   hairlines) comes out of the lead shot, so the media block still measures the
+   same 420px as a single-photo card and the row's captions stay level. */
+.card:has(.card__thumbs) .card__shot { height: 288px; }
 .card__thumbs {
+  flex: none;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1px;
