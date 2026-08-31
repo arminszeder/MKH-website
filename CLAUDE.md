@@ -13,6 +13,7 @@ dev-only, for the test script.
 
 ```
 index.html          the page
+impresszum.html     impresszum + panaszkezelés + békéltető testület
 adatkezeles.html    GDPR notice
 styles.css          all styles
 main.js             header, mobile nav, lightbox, compare slider
@@ -73,6 +74,29 @@ JSON-LD and sitemap still say `mkhwerk.hu` as a placeholder.
   mobile nav panel's `top`, and `scroll-padding-top`. Change the header's size
   and all three must follow.
 
+## The legal pages
+
+Two pages cover three obligations. `impresszum.html` carries both the Eker. tv.
+(2001. évi CVIII. tv. 4. §) service-provider block *and* the Fgytv. (1997. évi
+CLV. tv. 17/A. §) panaszkezelés + békéltető testület blocks — the statutes want
+the data continuously and directly accessible, which a footer link on every page
+satisfies; splitting them across two pages buys nothing.
+
+`.fill` marks a value that still has to be filled in — dashed gold underline, so
+an unfinished impresszum is impossible to miss on the rendered page. Delete the
+class along with the placeholder text when the real value goes in.
+
+Deliberately **not** on the site, each for a reason: no ÁSZF (no contract is
+concluded on the site — that changes the moment a form or online booking goes
+back up), no cookie banner (`main.js` sets no cookie and no storage, and a banner
+that asks anyway misrepresents the site), and **no ODR platform link** — that
+obligation was repealed by (EU) 2024/3228 and the platform shut down on
+20 July 2025, so copying it in from a template is now itself misleading.
+
+Google Fonts is still loaded from `fonts.googleapis.com` on all three pages,
+which hands the visitor's IP to Google; the adatkezelési tájékoztató discloses
+it. Self-hosting the two families would remove the site's last third-party call.
+
 ## Conventions
 
 - Palette and fonts are set as custom properties at the top of `styles.css`
@@ -109,8 +133,22 @@ Do not rebuild it from scratch.
 
 ## Still outstanding
 
-- Facebook URL is a bare `facebook.com` link in two places in `index.html`
-- `adatkezeles.html` needs the company name, registered address and tax number
+- **One field of company data is still missing.** The operator is 21 Kft.
+  Cégnév, székhely, adószám and közösségi adószám are in and confirmed against
+  EU VIES (live NAV data, not an aggregator); képviselő comes from Nemzeti
+  Cégtár. Still `[kitöltendő]` in `impresszum.html` and `adatkezeles.html`: the
+  **cégjegyzékszám** and its registering court. No free registry publishes it.
+  The OPTEN and Nemzeti Cégtár URL slugs encode `08-09-002541` — the slug
+  convention is real (it matches on sibling companies Imoville `08-09-027208`
+  and Rajka Green `08-09-022822`) — but `08` is the Győr-Moson-Sopron court and
+  the seat is Budapest, which would be `01-09-…`. Most likely the slug is a
+  pre-relocation number frozen for SEO. Do not copy it in; it is line one of the
+  cégkivonat.
+- **The seat is Budapest, the workshop is Mosonmagyaróvár, and that is correct.**
+  Confirmed by the owner. The registry also shows **0 telephely**, so the
+  workshop is not a registered site — the impresszum therefore shows a Budapest
+  address while the rest of the site is about Mosonmagyaróvár. That satisfies
+  Eker. tv. 4. § b) on its own. Don't "fix" it by inventing a telephely.
 - "A műhely" section has three dashed `.slot` placeholders awaiting real
   workshop photos — drop an `<img>` in and the styling handles the rest
 - No custom domain

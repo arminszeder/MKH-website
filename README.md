@@ -1,11 +1,12 @@
 # MKH Werk — weboldal
 
 Egyoldalas bemutatkozó oldal egyedi lakatosmunkákhoz (kapuk, korlátok, kerítések,
-lovas szerkezetek). Statikus HTML/CSS/JS, build lépés nélkül, egyetlen Vercel
-serverless függvénnyel az ajánlatkérő űrlaphoz.
+lovas szerkezetek). Statikus HTML/CSS/JS, build lépés és szerveroldali kód
+nélkül.
 
 ```
 index.html          a főoldal
+impresszum.html     impresszum, panaszkezelés, békéltető testület
 adatkezeles.html    adatkezelési tájékoztató (GDPR)
 styles.css          a teljes stíluslap
 main.js             menü, lightbox, előtte/utána csúszka
@@ -28,11 +29,11 @@ adatbázis és nincsenek környezeti változók. A kapcsolatfelvétel `tel:` és
 
 ## Mielőtt élesbe megy — cseréld ki
 
-A kódban `TODO` megjegyzés jelöli mindegyiket:
-
-- **Facebook URL** — `index.html` (kapcsolat blokk és footer), jelenleg
-  általános `facebook.com` link
-- **Cégadatok** (cégnév, székhely, adószám) — `adatkezeles.html`
+- **Cégadatok** — `impresszum.html` és `adatkezeles.html`. A hiányzó értékeket
+  `[kitöltendő …]` jelöli, aranyszínű szaggatott aláhúzással. Kell: cégnév,
+  székhely, telephely, cégjegyzékszám + cégbíróság, adószám, képviselő. Mindkét
+  oldalon ugyanazoknak az értékeknek kell szerepelniük, a cégkivonat szerint.
+  A pontos lista az `impresszum.html` tetején lévő megjegyzésben van.
 - **Domain** — `index.html` `canonical` + JSON-LD, `robots.txt`, `sitemap.xml`
 
 ## Fotók cseréje, új munka hozzáadása

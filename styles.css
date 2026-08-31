@@ -780,6 +780,8 @@ body.is-locked { overflow: hidden; }
 .legal__body ul { padding-left: 20px; }
 .legal__body li { margin-top: 8px; }
 .legal__updated { font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 28px; }
+.legal__body .fill { color: var(--g2); border-bottom: 1px dashed currentColor; opacity: 1; }
+.footer__legal { display: flex; gap: 20px; flex-wrap: wrap; }
 
 /* ------------------------------------------------------------ breakpoints -- */
 
