@@ -133,17 +133,21 @@ Do not rebuild it from scratch.
 
 ## Still outstanding
 
-- **One field of company data is still missing.** The operator is 21 Kft.
-  Cégnév, székhely, adószám and közösségi adószám are in and confirmed against
-  EU VIES (live NAV data, not an aggregator); képviselő comes from Nemzeti
-  Cégtár. Still `[kitöltendő]` in `impresszum.html` and `adatkezeles.html`: the
-  **cégjegyzékszám** and its registering court. No free registry publishes it.
-  The OPTEN and Nemzeti Cégtár URL slugs encode `08-09-002541` — the slug
-  convention is real (it matches on sibling companies Imoville `08-09-027208`
-  and Rajka Green `08-09-022822`) — but `08` is the Győr-Moson-Sopron court and
-  the seat is Budapest, which would be `01-09-…`. Most likely the slug is a
-  pre-relocation number frozen for SEO. Do not copy it in; it is line one of the
-  cégkivonat.
+- **LAUNCH BLOCKER: the impresszum has no cégjegyzékszám.** Eker. tv. 4. § d)
+  makes the registration number and the registering body mandatory, and a
+  hiányos impresszum is fineable on its own. The line was removed from
+  `impresszum.html` (and from `adatkezeles.html`, where it is not required) on
+  the owner's instruction because the value is not known yet and the site is not
+  public — a loud HTML comment marks exactly where it goes back, with the markup
+  to restore. **Do not deploy publicly until it is filled in.**
+  Everything else is verified: cégnév, székhely, adószám and közösségi adószám
+  against EU VIES (live NAV data, not an aggregator); képviselő from Nemzeti
+  Cégtár. No free registry publishes the cégjegyzékszám. The OPTEN and Nemzeti
+  Cégtár URL slugs encode `08-09-002541` — the slug convention is real, it
+  matches on sibling companies Imoville `08-09-027208` and Rajka Green
+  `08-09-022822` — but `08` is the Győr-Moson-Sopron court while the seat is
+  Budapest, which would be `01-09-…`. Most likely a pre-relocation number frozen
+  for SEO. Do not copy it in; it is line one of the cégkivonat.
 - **The seat is Budapest, the workshop is Mosonmagyaróvár, and that is correct.**
   Confirmed by the owner. The registry shows **0 telephely**, so the workshop is
   not a registered site, and the telephely line was removed from the impresszum
