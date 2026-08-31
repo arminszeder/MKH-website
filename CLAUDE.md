@@ -63,7 +63,10 @@ JSON-LD and sitemap still say `mkhwerk.hu` as a placeholder.
   `img { height: auto }` guards this; keep it.
 - **`[hidden]` loses to `display: grid/flex`.** Rules like `.form[hidden]`
   exist to restate `display: none`. Any new flex/grid element that gets toggled
-  with `hidden` needs the same.
+  with `hidden` needs the same. `.section[hidden]` joins `.card[hidden]` and
+  `.lightbox[hidden]` in that set — `.section` is block so it would obey
+  `hidden` anyway, but the rule keeps the guard uniform and survives someone
+  later making `.section` a grid.
 - **The gallery is a CSS grid, and the equal-height rules are load-bearing.**
   `repeat(auto-fill, minmax(340px, 1fr))` keeps a part-filled last row at column
   width instead of stretching one card across the section, and grid gives a
@@ -154,8 +157,13 @@ Do not rebuild it from scratch.
   on the owner's instruction. The székhely alone satisfies Eker. tv. 4. § b), so
   this is fine as it stands — do not add the workshop address back as a telephely
   unless it is actually registered as one.
-- "A műhely" section has three dashed `.slot` placeholders awaiting real
-  workshop photos — drop an `<img>` in and the styling handles the rest
+- **"A műhely" is hidden.** The section is intact in `index.html` — every
+  class, all three `.slot` placeholders, the copy — and carries only a `hidden`
+  attribute, because the dashed placeholders read as unfinished. Turn it back on
+  by deleting the word `hidden` from its `<section>` tag; nothing else. To fill
+  it, drop an `<img>` into each `.slot` and the styling handles the rest.
+  Hiding it is visually safe: it sits between `#lovas` (plain) and `#kapcsolat`
+  (`section--line`), so that section's own border-top keeps the divider rhythm.
 - No custom domain
 
 ## Verifying changes
