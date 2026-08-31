@@ -145,10 +145,11 @@ Do not rebuild it from scratch.
   pre-relocation number frozen for SEO. Do not copy it in; it is line one of the
   cégkivonat.
 - **The seat is Budapest, the workshop is Mosonmagyaróvár, and that is correct.**
-  Confirmed by the owner. The registry also shows **0 telephely**, so the
-  workshop is not a registered site — the impresszum therefore shows a Budapest
-  address while the rest of the site is about Mosonmagyaróvár. That satisfies
-  Eker. tv. 4. § b) on its own. Don't "fix" it by inventing a telephely.
+  Confirmed by the owner. The registry shows **0 telephely**, so the workshop is
+  not a registered site, and the telephely line was removed from the impresszum
+  on the owner's instruction. The székhely alone satisfies Eker. tv. 4. § b), so
+  this is fine as it stands — do not add the workshop address back as a telephely
+  unless it is actually registered as one.
 - "A műhely" section has three dashed `.slot` placeholders awaiting real
   workshop photos — drop an `<img>` in and the styling handles the rest
 - No custom domain
