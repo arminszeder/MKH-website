@@ -31,9 +31,21 @@ npm run dev     # http://127.0.0.1:5173
 `local → git push → Vercel auto-deploy`. Repo:
 `github.com/arminszeder/MKH-website`, branch `main`.
 
-**Not deployed yet.** Import at vercel.com/new, framework preset **Other**,
-leave build command and output directory empty. No domain yet — canonical URL,
-JSON-LD and sitemap still say `mkhwerk.hu` as a placeholder.
+**Pushed to GitHub, not deployed yet.** `main` is in sync with origin; nothing
+is live and no Vercel project exists, so there is no URL to share. Import at
+vercel.com/new, framework preset **Other**, leave build command and output
+directory empty.
+
+No domain yet — `canonical`, the JSON-LD and the sitemap all say `mkhwerk.hu`,
+which does not resolve. On a `*.vercel.app` URL the canonical would point at a
+dead domain, so either register the domain first or expect to update those three
+places twice.
+
+`vercel.json` sets `cleanUrls: true`, so in production `/impresszum.html`
+308-redirects to `/impresszum`. Internal links and the sitemap still use `.html`
+— one redirect hop per legal-page click. Left that way on purpose: `npm run dev`
+is `python3 -m http.server`, which serves **only** `.html`, so going
+extensionless would break local dev and the test suite for a marginal gain.
 
 ## Gotchas — read before editing these
 
@@ -85,9 +97,35 @@ CLV. tv. 17/A. §) panaszkezelés + békéltető testület blocks — the statut
 the data continuously and directly accessible, which a footer link on every page
 satisfies; splitting them across two pages buys nothing.
 
-`.fill` marks a value that still has to be filled in — dashed gold underline, so
-an unfinished impresszum is impossible to miss on the rendered page. Delete the
-class along with the placeholder text when the real value goes in.
+### Company data — verified, do not re-research
+
+This cost real effort to establish; take it from here rather than re-deriving it.
+Operator confirmed by the owner as **21 Kft.**, Budapest seat included.
+
+| field | value | source |
+|---|---|---|
+| Cégnév | 21 Kereskedelmi Korlátolt Felelősségű Társaság | EU VIES |
+| Székhely | 1023 Budapest, Bécsi út 3–5. 3. em. 27. | EU VIES |
+| Adószám | 10743580-2-41 | EU VIES |
+| Közösségi adószám | HU10743580 (valid) | EU VIES |
+| Képviselő | Hunyaddobrai Zoltán ügyvezető | Nemzeti Cégtár |
+| Cégjegyzékszám | **missing — see Still outstanding** | — |
+
+VIES (`ec.europa.eu/taxation_customs/vies/rest-api/ms/HU/vat/10743580`) is the
+one to trust: it queries NAV live. The aggregators are not reliable here — two
+separate WebFetch summaries of the OPTEN and Nemzeti Cégtár pages came back with
+fields belonging to different companies. Read their raw HTML if you must use them.
+
+Békéltető testület details in the page were checked against the board's own
+impresszum: `9022` Győr, Szent István út 10/A. Directories saying `9021` are
+using the chamber's old postcode. Vercel's address came from Vercel's own
+privacy policy; the Walnut, CA one in directories is stale.
+
+`.fill` renders a value that still has to be filled in — dashed gold underline,
+so an unfinished impresszum is impossible to miss on the rendered page. **No
+element currently uses it**; the rule stays in `styles.css` for when the
+cégjegyzékszám line goes back. Delete the class along with the placeholder text
+when a real value goes in.
 
 Deliberately **not** on the site, each for a reason: no ÁSZF (no contract is
 concluded on the site — that changes the moment a form or online booking goes
@@ -164,7 +202,14 @@ Do not rebuild it from scratch.
   it, drop an `<img>` into each `.slot` and the styling handles the rest.
   Hiding it is visually safe: it sits between `#lovas` (plain) and `#kapcsolat`
   (`section--line`), so that section's own border-top keeps the divider rhythm.
-- No custom domain
+- No custom domain — see Deploy for what that blocks
+- Self-hosting Cinzel and Jost is the last open privacy item (see The legal
+  pages). Roughly twenty minutes, removes the site's only third-party call.
+
+Both social links are real and were verified — the Facebook profile URL resolves
+to the "MKH Werk" page and `instagram.com/mkh_werk` to "MKH Werk (@mkh_werk)".
+They are in the footer, the contact block and the JSON-LD `sameAs`. No need to
+re-check them.
 
 ## Verifying changes
 
