@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /api/
 
-Sitemap: https://mkhwerk.hu/sitemap.xml
+Sitemap: https://mkhwerk.com/sitemap.xml

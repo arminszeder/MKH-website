@@ -36,16 +36,41 @@ is live and no Vercel project exists, so there is no URL to share. Import at
 vercel.com/new, framework preset **Other**, leave build command and output
 directory empty.
 
-No domain yet — `canonical`, the JSON-LD and the sitemap all say `mkhwerk.hu`,
-which does not resolve. On a `*.vercel.app` URL the canonical would point at a
-dead domain, so either register the domain first or expect to update those three
-places twice.
+**The domain is `mkhwerk.com`** — confirmed by the owner. `canonical`, `og:url`,
+the JSON-LD, `robots.txt` and the sitemap all say `mkhwerk.com`, on all three
+pages. The earlier `mkhwerk.hu` is dead; do not reintroduce it. Until the domain
+is attached to the Vercel project these are absolute URLs to a host that does
+not answer, so on a `*.vercel.app` URL the canonical points nowhere **and the
+link-preview image cannot be fetched** — see Link previews.
 
 `vercel.json` sets `cleanUrls: true`, so in production `/impresszum.html`
 308-redirects to `/impresszum`. Internal links and the sitemap still use `.html`
 — one redirect hop per legal-page click. Left that way on purpose: `npm run dev`
 is `python3 -m http.server`, which serves **only** `.html`, so going
 extensionless would break local dev and the test suite for a marginal gain.
+
+## Link previews
+
+`assets/og-cover.jpg` is what Facebook, Messenger, WhatsApp and LinkedIn show
+when the link is posted: the bronze logo on its wood mockup, 1200×630, the size
+every one of them wants. All three pages point `og:image` at it.
+
+- **It is derived art, like the other logo files.** Source is
+  `source/mkh-logo-mockup-wood.jpg` (1536×1024, supplied by the owner). That is
+  3:2 and the preview slot is 1.91:1, so cropping to fit would have clipped the
+  horse's ears or the `MKH WERK` wordline. Instead the whole frame was scaled to
+  630 tall and the wood grain extended sideways by mirroring the edge strips,
+  with a ramp darkening the new outer edges — the source's vignette runs the
+  wrong way once mirrored. Do not re-crop it.
+- **`og:image` must be an absolute URL.** It was `/assets/gate-anthracite.jpg`,
+  a root-relative path, which most scrapers refuse — that is why no picture came
+  up. Every `og:` URL in the three pages is now `https://mkhwerk.com/…`, which
+  means **the preview stays blank until `mkhwerk.com` actually serves the site.**
+  A `*.vercel.app` deploy will not show it.
+- Facebook caches a URL's preview hard. After the domain is live, push the first
+  scrape through the Sharing Debugger
+  (`developers.facebook.com/tools/debug/`) → Scrape Again, otherwise a bad early
+  fetch sticks around for days.
 
 ## Gotchas — read before editing these
 
@@ -202,7 +227,9 @@ Do not rebuild it from scratch.
   it, drop an `<img>` into each `.slot` and the styling handles the rest.
   Hiding it is visually safe: it sits between `#lovas` (plain) and `#kapcsolat`
   (`section--line`), so that section's own border-top keeps the divider rhythm.
-- No custom domain — see Deploy for what that blocks
+- **`mkhwerk.com` is not attached to a Vercel project yet.** Everything in the
+  markup already points at it, so until it resolves the canonical is dead and
+  the Facebook link preview shows no image — see Deploy and Link previews.
 - Self-hosting Cinzel and Jost is the last open privacy item (see The legal
   pages). Roughly twenty minutes, removes the site's only third-party call.
 
